@@ -1,0 +1,8 @@
+html{font-size: 625%;color: #333333;}
+body{font-size: .16rem;}
+body,p,ul,h1,h2,h3,h4,h5,h6,ol,dd,dl,input,i,em{margin:0;padding:0;list-style:none;border: 0;outline: none;font-weight:normal;font-style: normal;}
+a{text-decoration:none;color:#666;}
+select{-webkit-appearance: menulist-button;-webkit-appearance: none;}
+/*input{font:12px;}*/
+img{border: 0;}
+.clear:after{contect:"";display: block;clear: both;height: 0;}
