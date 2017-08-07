@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:72:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\agency.html";i:1502074958;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

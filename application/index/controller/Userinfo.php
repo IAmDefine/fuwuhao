@@ -98,6 +98,10 @@ class Userinfo extends Controller{
   //查询有没有填写信息
   public function getstarinfo()
   {
+    $sign['signtype'] = $_POST['signtype']; //签约者类型
+    $sign['ctype'] = '3'; //合同类型
+    Session::set('sign',$sign);
+
     $uid = Session::get('wx_userinfo');
     $url = '/inter/star/startinfolook';
     $data['uid'] = $uid['uid'];
@@ -120,13 +124,13 @@ class Userinfo extends Controller{
   public function addauth()
   {
     $info = $_POST;
-
     $info = array_filter($info);
     $uid = Session::get('wx_userinfo');
     $url = '/inter/star/starinfoadd';
     $info['ifauth'] = 3;
     $info['uid'] = $uid['uid'];
     $res = request_post($url,$info);
+    Session::set('sid',$res['data']['id']);
     if($res['status']==1){
       return 1;
     }else{

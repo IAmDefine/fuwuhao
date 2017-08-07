@@ -1,0 +1,28 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:69:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\msg.html";i:1502070399;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+	<link rel="stylesheet" href="/css/weui.min.css">
+	<script type="text/javascript" src="/js/weui.min.js"></script>
+	<title>核审结果</title>
+</head>
+<body>
+	<div class="weui-msg">
+    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title"></h2>
+        <p class="weui-msg__desc"><?php echo $s['checkdesc']; ?></p>
+    </div>
+    <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+					<!-- /index/business/auth -->
+            <a href="" class="weui-btn weui-btn_warn">重新认证</a>
+        </p>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:72:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\myinfo.html";i:1502070122;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -51,96 +52,84 @@
 </head>
 <body ontouchstart>
 <div class="weui-msg">
-{if condition="!empty($statrinfo)"}
-        {switch name="statrinfo.ifauth"}
-        {case value="2"}<div class="con"><text class="text1">核审通过</text></div>{/case}
-        {case value="3"}<div class="con"><text class='text1'>资料核审中</text></div>{/case}
-        {case value="4"}<div class="con"><text class='text1'>核审失败</text></div>{/case}
-        {default /}default
-        {/switch}
-{else /}
+<?php if(!empty($statrinfo)): switch($statrinfo['ifauth']): case "2": ?><div class="con"><text class="text1">核审通过</text></div><?php break; case "3": ?><div class="con"><text class='text1'>资料核审中</text></div><?php break; case "4": ?><div class="con"><text class='text1'>核审失败</text></div><?php break; default: ?>default
+        <?php endswitch; else: ?>
 <div class="con"><text class='text1'>尚未核审</text></div>
-{/if}
-{if condition="!empty($statrinfo)"}
-    {switch name="statrinfo.ifauth"}
-         {case value="4"}<a href="/index/userinfo/reason/sid/{$statrinfo['id']}" class="why">查看原因</a>{/case}
-    {/switch}
-{/if}
+<?php endif; if(!empty($statrinfo)): switch($statrinfo['ifauth']): case "4": ?><a href="/index/sign/defeated/sid/<?php echo $statrinfo['id']; ?>" class="why">查看原因</a><?php break; endswitch; endif; ?>
 
 
 	<div class="weui-msg__text-area">
 		<!-- <h2 class="weui-msg__title">绑定成功</h2> -->
-		<p class="weui-msg__desc" style="margin-top: 10px;">当前账号：{$wx_userinfo['mobile']}</p>
+		<p class="weui-msg__desc" style="margin-top: 10px;">当前账号：<?php echo $wx_userinfo['mobile']; ?></p>
 	</div>
 </div>
-{if condition="!empty($statrinfo)"}
-{if condition="($statrinfo['credtype']==1) OR ($statrinfo['credtype']==2)"}
+<?php if(!empty($statrinfo)): if(($statrinfo['credtype']==1) OR ($statrinfo['credtype']==2)): ?>
 <div class="weui-cells">
     <div class="weui-cell">
         <div class="weui-cell__bd">
-            <p>企业名称：{$statrinfo['bizname']}</p>
+            <p>企业名称：<?php echo $statrinfo['bizname']; ?></p>
         </div>
     </div>
     <div class="weui-cell">
         <div class="weui-cell__bd">
-            <p>企业注册号：{$statrinfo['compno']}</p>
+            <p>企业注册号：<?php echo $statrinfo['compno']; ?></p>
         </div>
     </div>
-    {/if}
+    <?php endif; ?>
       <div class="weui-cell">
         <div class="weui-cell__bd">
-            <p>明星艺名：{$statrinfo['names']}</p>
+            <p>明星艺名：<?php echo $statrinfo['names']; ?></p>
         </div>
     </div>
        <div class="weui-cell">
         <div class="weui-cell__bd">
-            <p>明星姓名：{$statrinfo['oldname']}</p>
+            <p>明星姓名：<?php echo $statrinfo['oldname']; ?></p>
         </div>
     </div>
      <div class="weui-cell">
         <div class="weui-cell__bd">
-            <p>明星身份证号：{$statrinfo['idno']}</p>
+            <p>明星身份证号：<?php echo $statrinfo['idno']; ?></p>
         </div>
     </div>
 </div>
 
 <div class="weui-uploader" style="margin-top:10px">
-	{if condition="($statrinfo['credtype']==1) OR ($statrinfo['credtype']==2)"}
+	<?php if(($statrinfo['credtype']==1) OR ($statrinfo['credtype']==2)): ?>
     <div class="weui-uploader__bd">
         <div class="type_img">
-            <image src="{$statrinfo['tradcert']}" class="img" />
+            <image src="<?php echo $statrinfo['tradcert']; ?>" class="img" />
             <div class="text">营业执照</div>
         </div>
 
            <div class="type_img">
-            <image src="{$statrinfo['entrus']}" class="img" />
+            <image src="<?php echo $statrinfo['entrus']; ?>" class="img" />
             <div class="text">企业委托书</div>
         </div>
     </div>
-    {/if}
+    <?php endif; ?>
       <div class="weui-uploader__bd">
         <div class="type_img">
-            <image src="{$statrinfo['admcard']}" class="img" />
+            <image src="<?php echo $statrinfo['admcard']; ?>" class="img" />
             <div class="text">身份证正面</div>
         </div>
            <div class="type_img">
-            <image src="{$statrinfo['reveside']}" class="img" />
+            <image src="<?php echo $statrinfo['reveside']; ?>" class="img" />
             <div class="text">身份证反面</div>
         </div>
     </div>
       <div class="weui-uploader__bd">
         <div class="type_img">
-            <image src="{$statrinfo['handid']}" class="img" />
+            <image src="<?php echo $statrinfo['handid']; ?>" class="img" />
             <div class="text" style="left:20px;">手持身份证正面照</div>
         </div>
-		{if condition="$statrinfo['credtype']==1"}
+		<?php if($statrinfo['credtype']==1): ?>
         <div class="type_img">
-            <image src="{$statrinfo['groupcode']}" class="img" />
+            <image src="<?php echo $statrinfo['groupcode']; ?>" class="img" />
             <div class="text" style="left:25px;">组织结构代码证</div>
         </div>
-		{/if}
+		<?php endif; ?>
     </div>
 </div>
-{/if}
+<?php endif; ?>
 </body>
 </html>
