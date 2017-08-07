@@ -106,18 +106,22 @@ class Sign extends Base
 
     //合同详情
     //合同详情页面
-public function contractinfo()
-{
-
-  $sid = Session::get('sid');
-  $url ='/inter/star/agreelist';
-  $data['sid'] = $sid;
-  $res = request_post($url,$data);
-  // dd($res['data']['data'][0]);
-  $this->assign('contractinfo',$res['data']['data'][0]);
-  return view();
-
-}
+    public function contractinfo()
+    {
+      $sid = !empty(Session::get('sid'))?Session::get('sid'):'';
+      if($sid){
+        $url ='/inter/star/agreelist';
+        $data['sid'] = $sid;
+        $res = request_post($url,$data);
+        // dd($res[status]);
+        if($res['status']==1){
+        $this->assign('contractinfo',$res['data']['data'][0]);
+        }
+      }else{
+        $this->assign('contractinfo','');
+      }
+      return view();
+    }
 
 
 }

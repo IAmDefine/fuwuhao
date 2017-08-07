@@ -28,11 +28,29 @@
 			margin-left:22%;
 			margin-top: 30px;
 		}
+
+		.con_img{
+			width: 100%;
+			height: 100%;
+			position: relative;
+			top: 100px;
+			left: 32%;
+		}
+		.con_img >img{
+			width: 137px;
+			height: 145px;
+		}
+		.aaa{
+			position: relative;
+			left: 6%;
+			top: 10px;
+		}
+
 	</style>
 </head>
 <body ontouchstart>
+	{if condition="!empty($contractinfo)"}
 	<div class="con">
-
         {switch name="contractinfo.states"}
         {case value="1"}<div class="text">正在核审中</div>{/case}
         {case value="2"}<div class="text">合同以生成</div>{/case}
@@ -41,12 +59,14 @@
         {default /}default
         {/switch}
 	</div>
+
         {switch name="contractinfo.types"}
         {case value='1'}<h4 class="title">商务全约</h4>{/case}
         {case value='2'}<h4 class="title">肖像独家</h4>{/case}
         {case value='3'}<h4 class="title">代理合作</h4>{/case}
         {default /}default
         {/switch}
+
 <div class="weui-cells">
     <div class="weui-cell">
         <div class="weui-cell__bd">
@@ -74,11 +94,17 @@
         </div>
     </div>
 </div>
+
         {switch name="contractinfo.states"}
         {case value="1"}<a class="weui-btn weui-btn_warn" href="{$contractinfo['drafturl']|default=''}">查看合同</a>{/case}
         {case value="4"}<a class="weui-btn weui-btn_warn" href="{$contractinfo['docurl']|default=''}">查看合同</a>{/case}
         {default /}default
         {/switch}
-
+{else /}
+<div class="con_img">
+	<img src="/imgs/no_con.png">
+	<div class="aaa">暂无签约数据</div>
+</div>
+{/if}
 </body>
 </html>
