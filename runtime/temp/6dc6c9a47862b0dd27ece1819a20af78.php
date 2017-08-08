@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\contractinfo.html";i:1502094876;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\contractinfo.html";i:1502158752;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +52,7 @@
 <body ontouchstart>
 	<?php if(!empty($contractinfo)): ?>
 	<div class="con">
-        <?php switch($contractinfo['states']): case "1": ?><div class="text">正在核审中</div><?php break; case "2": ?><div class="text">合同以生成</div><?php break; case "3": ?><div class="text">核审未通过</div><?php break; case "4": ?><div class="text">签约成功</div><?php break; default: ?>default
+        <?php switch($contractinfo['states']): case "1": ?><div class="text">正在核审中</div><?php break; case "2": ?><div class="text">等待签约</div><?php break; case "3": ?><div class="text">核审未通过</div><?php break; case "4": ?><div class="text">签约成功</div><?php break; default: ?>default
         <?php endswitch; ?>
 	</div>
 
@@ -86,8 +86,7 @@
         </div>
     </div>
 </div>
-
-        <?php switch($contractinfo['states']): case "1": ?><a class="weui-btn weui-btn_warn" href="<?php echo (isset($contractinfo['drafturl']) && ($contractinfo['drafturl'] !== '')?$contractinfo['drafturl']:''); ?>">查看合同</a><?php break; case "4": ?><a class="weui-btn weui-btn_warn" href="<?php echo (isset($contractinfo['docurl']) && ($contractinfo['docurl'] !== '')?$contractinfo['docurl']:''); ?>">查看合同</a><?php break; default: ?>default
+        <?php switch($contractinfo['states']): case "1": ?><a href="javascript:;" style="margin-top:20px" class="weui-btn weui-btn_plain-default weui-btn_plain-disabled">签约</a><?php break; case "2": ?><a style="margin-top:20px" class="weui-btn weui-btn_warn sign" href="javascript:;">签约</a><?php break; default: ?>default
         <?php endswitch; else: ?>
 <div class="con_img">
 	<img src="/imgs/no_con.png">
@@ -95,4 +94,17 @@
 </div>
 <?php endif; ?>
 </body>
+<script type="text/javascript">
+	$('.sign').click(function(){
+		$.ajax({
+				url:"/index/sign/begin",
+				type:"POST",
+				data:'',
+				dataType:'JSON',
+				success:function (data) {
+					console.log(data);
+				}
+		})
+	})
+</script>
 </html>

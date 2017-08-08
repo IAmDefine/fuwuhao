@@ -171,8 +171,11 @@
         data:info,
         dataType:'JSON',
         success:function (data) {
-          if(data==1){
+        //  console.log(data);return;
+          if(data['status']==1){
             window.location.href='/index/sign/contractinfo'
+          }else{
+            weui.alert(data['msg']);
           }
         }
       });

@@ -11,7 +11,6 @@ class Sign extends Base
       return view();
     }
 
-
     //我的页面
     public function myinfo()
     {
@@ -85,6 +84,17 @@ class Sign extends Base
     public function signup()
     {
       $sid = Session::get('sid');
+      $url = '/inter/star/startinfolook';
+      $data['id'] = $sid;
+      $res = request_post($url,$data);
+      //生成文签id
+      if(!$res['data']['wquid']){
+        $mobile = Session::get('wx_userinfo')['mobile'];
+        $a = $this->createwquid($res['data'],$mobile,$sid);
+        if($a['status']!=1){
+          return $a;
+        }
+      }
       $post_info = array_filter($_POST);
       $post_info['id'] = $sid;
       $url = '/inter/star/startinfoedit';
@@ -98,13 +108,12 @@ class Sign extends Base
       $data['states'] = 1;
       $res = request_post($url,$data);
       if($res['status']==1){
-        return 1;
+        return array('msg'=>'ok','status'=>'1');
       }else{
-        return 0;
+        return array('msg'=>'申请失败!','status'=>'3');
       }
     }
 
-    //合同详情
     //合同详情页面
     public function contractinfo()
     {
@@ -123,5 +132,73 @@ class Sign extends Base
       return view();
     }
 
+    //开始签约
+    public function begin()
+    {
+      return 22;
+    }
+
+    //创建文签uid和印章
+    private function createwquid($data,$mobile,$sid)
+    {
+      if($data['credtype']==3){
+        $url = 'https://api.youxingku.cn/signpact/regperson.php';
+        $wquid = 'u'.$mobile;
+        $data = array('uid'=>$wquid,'uname'=>$data['oldname'],'uphone'=>$mobile,'ucode'=>$data['idno']);
+        $res = get_api($url,$data);
+        if($res['status']==1){
+          //生成签名
+          $url = 'https://api.youxingku.cn/signpact/genpersonstamp.php';
+          $postdata['uid'] = $wquid;
+          $re = get_api($url,$data);
+          $stampid = $re['data']['stamp'];
+          $wqinfo = array('msg'=>'ok','status'=>'1');
+
+          //写入数据库
+          $url ='/inter/star/startinfoedit';
+          $edata['id'] = $sid;
+          $edata['wquid'] = $wquid;
+          $edata['stampid'] = $stampid;
+          $res = request_post($url,$edata);
+          if($res['status']==1){
+            return $wqinfo;
+          }else{
+            return array('msg'=>'生成公章失败！','status'=>'3');
+          }
+        }else{
+          return array('msg'=>$res['msg'],'status'=>3);
+        }
+
+      }else{
+
+        $url = 'https://api.youxingku.cn/signpact/regbiz.php';
+        $wquid = 'b'.$mobile;
+        $data = array('bizid'=>$wquid,'bizname'=>$data['bizname'],'bizcode'=>$data['compno'],'workname'=>$data['oldname'],'workphone'=>$mobile,'workid'=>$data['idno']);
+        $res =get_api($url,$data);
+          if($res['status']==1){
+          //生成签名
+          $url = 'https://api.youxingku.cn/signpact/genbizstamp.php';
+          $postdata['uid'] = $wquid;
+          $re =get_api($url,$postdata);
+          $stampid = $re['data']['stamp'];
+          $wqinfo = array('msg'=>'ok','status'=>'1');
+
+          //写入数据库
+          $url ='/inter/star/startinfoedit';
+          $edata['id'] = $sid;
+          $edata['wquid'] = $wquid;
+          $edata['stampid'] = $stampid;
+          $res = request_post($url,$edata);
+          if($res['status']==1){
+            return $wqinfo;
+          }else{
+            return array('msg'=>'生成公章失败！','status'=>'3');
+          }
+        }else{
+          return array('msg'=>$res['msg'],'status'=>3);
+        }
+      }
+
+    }
 
 }

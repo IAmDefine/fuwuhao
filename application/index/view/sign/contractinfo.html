@@ -53,7 +53,7 @@
 	<div class="con">
         {switch name="contractinfo.states"}
         {case value="1"}<div class="text">正在核审中</div>{/case}
-        {case value="2"}<div class="text">合同以生成</div>{/case}
+        {case value="2"}<div class="text">等待签约</div>{/case}
         {case value="3"}<div class="text">核审未通过</div>{/case}
         {case value="4"}<div class="text">签约成功</div>{/case}
         {default /}default
@@ -94,10 +94,9 @@
         </div>
     </div>
 </div>
-
         {switch name="contractinfo.states"}
-        {case value="1"}<a class="weui-btn weui-btn_warn" href="{$contractinfo['drafturl']|default=''}">查看合同</a>{/case}
-        {case value="4"}<a class="weui-btn weui-btn_warn" href="{$contractinfo['docurl']|default=''}">查看合同</a>{/case}
+        {case value="1"}<a href="javascript:;" style="margin-top:20px" class="weui-btn weui-btn_plain-default weui-btn_plain-disabled">签约</a>{/case}
+        {case value="2"}<a style="margin-top:20px" class="weui-btn weui-btn_warn sign" href="javascript:;">签约</a>{/case}
         {default /}default
         {/switch}
 {else /}
@@ -107,4 +106,17 @@
 </div>
 {/if}
 </body>
+<script type="text/javascript">
+	$('.sign').click(function(){
+		$.ajax({
+				url:"/index/sign/begin",
+				type:"POST",
+				data:'',
+				dataType:'JSON',
+				success:function (data) {
+					console.log(data);
+				}
+		})
+	})
+</script>
 </html>
