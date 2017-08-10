@@ -135,8 +135,54 @@ class Sign extends Base
     //开始签约
     public function begin()
     {
-      return 22;
+      $sid = !empty(Session::get('sid'))?Session::get('sid'):'';
+      if($sid){
+        $url ='/inter/star/agreelist';
+        $data['sid'] = $sid;
+        $res = request_post($url,$data);
+        $cinfo = $res['data']['data'][0];
+
+        $res = $this->select_myinfo();
+        $wquid = $res['data']['wquid'];
+        $stamps = $res['data']['stampid'];
+        $docid = $cinfo['documentid'];
+        $url = 'https://api.youxingku.cn/signpact/signing.php';
+        $data['docid'] = $docid; 
+        $data['uid'] = $wquid; 
+        $data['stamps'] = $stamps; 
+        get_api($url,$data);
+
+        $url = 'https://api.youxingku.cn/signpact/downpact.php';
+        $downpact['uid'] = $wquid;
+        $downpact['docid'] = $docid;
+        $res = get_api($url,$data);
+        if($res['status']==1){
+          $fname = $res['data']['fname']; //合同文件
+          //更新数据库
+          $url = '/inter/star/auditagree';
+          $data1['id'] = $cinfo['id'];
+          $data1['states'] = '4';
+          $data1['docurl'] = $fname;
+          $res = request_post($url,$data1);
+          if($res['status']==1){
+            return 1;
+          }else{
+            return 0;
+          }
+        }        
+      }
     }
+
+    //查询个人信息
+    private function select_myinfo()
+    {
+      $sid = Session::get('sid');
+      $url = '/inter/star/startinfolook';
+      $data['id'] = $sid;
+      $starinfo = request_post($url,$data);
+      return $starinfo;
+    }
+
 
     //创建文签uid和印章
     private function createwquid($data,$mobile,$sid)

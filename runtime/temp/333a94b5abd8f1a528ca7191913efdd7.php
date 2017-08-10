@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:77:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\sign_agency.html";i:1502164385;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:77:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\sign_agency.html";i:1502164843;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -176,7 +176,7 @@
           if(data['status']==1){
             window.location.href='/index/sign/contractinfo'
           }else{
-            weui.alert(data['msg']);            
+            weui.alert(data['msg']);
           }
         }
       });

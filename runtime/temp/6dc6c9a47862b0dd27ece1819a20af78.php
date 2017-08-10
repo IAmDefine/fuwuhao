@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\contractinfo.html";i:1502158752;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\wechat\public/../application/index\view\sign\contractinfo.html";i:1502345107;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,8 +86,7 @@
         </div>
     </div>
 </div>
-        <?php switch($contractinfo['states']): case "1": ?><a href="javascript:;" style="margin-top:20px" class="weui-btn weui-btn_plain-default weui-btn_plain-disabled">签约</a><?php break; case "2": ?><a style="margin-top:20px" class="weui-btn weui-btn_warn sign" href="javascript:;">签约</a><?php break; default: ?>default
-        <?php endswitch; else: ?>
+        <?php switch($contractinfo['states']): case "1": ?><a href="javascript:;" style="margin-top:20px" class="weui-btn weui-btn_plain-default weui-btn_plain-disabled">签约</a><?php break; case "2": ?><a style="margin-top:20px" class="weui-btn weui-btn_warn sign" href="javascript:;">签约</a><?php break; case "4": ?><a style="margin-top:20px" class="weui-btn weui-btn_warn sign" href="<?php echo $contractinfo['docurl']; ?>">查看合同</a><?php break; endswitch; else: ?>
 <div class="con_img">
 	<img src="/imgs/no_con.png">
 	<div class="aaa">暂无签约数据</div>
@@ -97,13 +96,15 @@
 <script type="text/javascript">
 	$('.sign').click(function(){
 		$.ajax({
-				url:"/index/sign/begin",
-				type:"POST",
-				data:'',
-				dataType:'JSON',
-				success:function (data) {
-					console.log(data);
+			url:"/index/sign/begin",
+			type:"POST",
+			data:'',
+			dataType:'JSON',
+			success:function (data) {
+				if(data==1){
+				 window.location.href='/index/sign/contractinfo'
 				}
+			}
 		})
 	})
 </script>
