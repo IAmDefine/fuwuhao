@@ -7,7 +7,8 @@ use Libs\Wechat_accredit;
 class Userinfo extends Controller{
 
   public function login()
-  {   //微信code
+  {
+      //微信code
       $code = !empty($_GET['code'])? $_GET['code'] : '';
       $appid = config('appid');
       $appsecret = config('appsecret');
@@ -24,12 +25,10 @@ class Userinfo extends Controller{
         // $wxid = $wechatinfo['unionid'];
         $url = '/inter/index/userdetail';
         $wxid = $wechatinfo['openid'];
-
         $data['wxpcopenid'] = $wxid;
         // $data['wxpcopenid'] = rand(111111,999999); //随机的
 
         $sinfo = request_post($url,$data);
-        // dd($sinfo);
         if($sinfo['msg']=='ok'){
           $uinfo = $sinfo['data'];
           $wx_userinfo['uid'] = $sinfo['data'][0]['id'];
@@ -51,13 +50,15 @@ class Userinfo extends Controller{
           }
 
         }else{
-          //去注册
-          $this -> assign('openid',$wxid);
-           return view();
+          Session::set('openid',$wxid);
+          $this -> redirect('/index/userinfo/mylogin');
         }
       }
   }
-
+  public function mylogin()
+  {
+    return view();
+  }
   //获取验证码
   public function getcode()
   {

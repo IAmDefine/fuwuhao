@@ -97,7 +97,7 @@
         {switch name="contractinfo.states"}
         {case value="1"}<a href="javascript:;" style="margin-top:20px" class="weui-btn weui-btn_plain-default weui-btn_plain-disabled">签约</a>{/case}
         {case value="2"}<a style="margin-top:20px" class="weui-btn weui-btn_warn sign" href="javascript:;">签约</a>{/case}
-        {case value="4"}<a style="margin-top:20px" class="weui-btn weui-btn_warn sign" href="{$contractinfo['docurl']}">查看合同</a>{/case}
+        {default /}default
         {/switch}
 {else /}
 <div class="con_img">
@@ -109,15 +109,13 @@
 <script type="text/javascript">
 	$('.sign').click(function(){
 		$.ajax({
-			url:"/index/sign/begin",
-			type:"POST",
-			data:'',
-			dataType:'JSON',
-			success:function (data) {
-				if(data==1){
-				 window.location.href='/index/sign/contractinfo'
+				url:"/index/sign/begin",
+				type:"POST",
+				data:'',
+				dataType:'JSON',
+				success:function (data) {
+					console.log(data);
 				}
-			}
 		})
 	})
 </script>
